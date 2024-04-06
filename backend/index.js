@@ -40,6 +40,34 @@ app.get("/hash", (req, res) => {
   });
 });
 
+// LOGIN USER
+app.post("/login", (req, res) => {
+  const sql = "SELECT * FROM users Where email = ?";
+  con.query(sql, [req.body.email], (err, result) => {
+    if (err)
+      return res.json({ Status: "Error", Error: "Error in running query" });
+    if (result.length > 0) {
+      bcrypt.compare(
+        req.body.password.toString(),
+        result[0].password,
+        (err, response) => {
+          if (err) return res.json({ Error: "password error" });
+          if (response) {
+            return res.json({ Status: "Success" });
+          } else {
+            return res.json({
+              Status: "Error",
+              Error: "Wrong Email or Password",
+            });
+          }
+        }
+      );
+    } else {
+      return res.json({ Status: "Error", Error: "Wrong Email or Password" });
+    }
+  });
+});
+
 //REGISTER USER
 app.post("/register", (req, res) => {
   const sql = "INSERT INTO users (`name`,`email`,`password`) VALUES (?)";
