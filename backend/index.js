@@ -82,7 +82,7 @@ app.post("/register", (req, res) => {
 });
 
 // PORT
-const port = 3000;
+const port = 3001;
 
 app.listen(port, () => {
   console.log(colors.cyan(`Server running on port ${port}`));

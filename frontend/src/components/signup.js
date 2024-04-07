@@ -1,10 +1,22 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from "react";
+import Axios from "axios";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+
+  const register = (e) => {
+    e.preventDefault();
+    Axios.post("http://localhost:3001/register", {
+      email: email,
+      name: name,
+      password: password,
+    }).then((response) => {
+      console.log(response);
+    });
+  };
   let imgs = [
     "https://as2.ftcdn.net/v2/jpg/03/39/70/91/1000_F_339709132_H9HSSTtTmayePcbARkTSB2qoZTubJ6bR.jpg",
   ];
@@ -70,7 +82,11 @@ const Signup = () => {
               </div>
 
               <div className="text-center text-lg-start mt-4 pt-2">
-                <button type="button" className="btn btn-primary btn-lg">
+                <button
+                  type="button"
+                  className="btn btn-primary btn-lg"
+                  onClick={register}
+                >
                   Sign Up
                 </button>
                 <p className="small fw-bold mt-2 pt-1 mb-0">
