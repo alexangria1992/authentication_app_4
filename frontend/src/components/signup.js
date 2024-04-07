@@ -6,6 +6,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [registerStatus, setRegisterStatus] = useState("");
 
   const register = (e) => {
     e.preventDefault();
@@ -15,6 +16,11 @@ const Signup = () => {
       password: password,
     }).then((response) => {
       console.log(response);
+      if (response.data.message) {
+        setRegisterStatus(response.data.message);
+      } else {
+        setRegisterStatus("ACCOUNT CREATED SUCCESSFULLY");
+      }
     });
   };
   let imgs = [
@@ -29,6 +35,15 @@ const Signup = () => {
               <div className="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                 <p className="lead fw-normal mb-0 me-3">Create Your Account</p>
               </div>
+              <h1
+                style={{
+                  fontSize: "15px",
+                  textAlign: "center",
+                  marginTop: "20px",
+                }}
+              >
+                {registerStatus}
+              </h1>
 
               <div className="form-outline mb-4">
                 <input
