@@ -2,11 +2,14 @@
 import React, { useState } from "react";
 import loginimg from "./login.png";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const login = (e) => {
     e.preventDefault();
@@ -17,6 +20,11 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res);
+        if (res.data.Status === "Success") {
+          navigate("/profile");
+        } else {
+          setError(res.data.Error);
+        }
       })
       .catch((err) => console.log(err));
   };
